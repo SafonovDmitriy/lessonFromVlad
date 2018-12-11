@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
-import Circle from "./components/Circle/Circle";
+import HomePage from "./components/HomePage/HomePage";
+import HomePageWithId from "./components/HomePageWithId/HomePageWithId";
+import About from "./components/About/About";
 
-import { LoaderContainer, loader } from "./components/Loader/Loader";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 import classes from "./App.less";
 
 class App extends Component {
-	componentDidMount() {
-		loader.show();
-		setTimeout(()=> {
-			loader.hide();
-		}, 2000);
-	}
+
 
 	render() {
 		return (
-			<div className={classes.app}>
-				Привет мир
-
-				<LoaderContainer />
-					<Circle />
-			</div>
+			<Switch>
+				<Route exact path={"/"} component={HomePage} />
+				<Route exact path={"/about"} component={About} />
+				<Route path={"/homepage/:id"} component={HomePageWithId} />
+				{/*<Route exact path={"/homepage"} />*/}
+				{/*<Route path={"/homepage/:id"} render={*/}
+					{/*(props)=><HomePageWithId {...props}  post={posts[props.match.params.id -1]} />*/}
+				{/*} />*/}
+				{/*<Route path={"/about"} component={About} />*/}
+			</Switch>
 		);
 	}
 }
 
-export default App;
+export default withRouter(App);

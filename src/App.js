@@ -16,11 +16,6 @@ class App extends Component {
 				<Route exact path={"/"} component={HomePage} />
 				<Route exact path={"/about"} component={About} />
 				<Route path={"/homepage/:id"} component={HomePageWithId} />
-				{/*<Route exact path={"/homepage"} />*/}
-				{/*<Route path={"/homepage/:id"} render={*/}
-					{/*(props)=><HomePageWithId {...props}  post={posts[props.match.params.id -1]} />*/}
-				{/*} />*/}
-				{/*<Route path={"/about"} component={About} />*/}
 			</Switch>
 		);
 	}

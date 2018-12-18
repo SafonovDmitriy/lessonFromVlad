@@ -8,7 +8,7 @@ const initialState = {
 };
 // const reducer = {};
 const reducer = {
-	[postsAction.fetchPostsStart]: (state) => ({
+	[postsAction.fetchPosts]: (state) => ({
 		...state,
 		postStatus: "pending"
 	}),

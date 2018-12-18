@@ -23,7 +23,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchPosts();
+		this.props.fetchPosts("Привет");
 	}
 
 	render() {

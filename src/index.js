@@ -4,12 +4,14 @@ import App from './App';
 import store from "./modules/store";
 import { Provider } from "react-redux";
 
-import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
+import history from "./modules/history";
+
+import { BrowserRouter, Router, Switch, withRouter } from "react-router-dom";
 
 ReactDOM.render(
 	<Provider store={store}>
-		<BrowserRouter>
+		<Router history={history}>
 			<App />
-		</BrowserRouter>
+		</Router>
 	</Provider>,
 document.getElementById('root'));

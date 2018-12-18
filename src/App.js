@@ -3,17 +3,27 @@ import HomePage from "./components/HomePage/HomePage";
 import HomePageWithId from "./components/HomePageWithId/HomePageWithId";
 import About from "./components/About/About";
 
-import { string } from "prop-types";
+import { ToastContainer } from 'react-toastify';
 
-import { Route, Switch, withRouter } from "react-router-dom";
+import { string, func } from "prop-types";
+
+import { Route, Switch, withRouter, Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import classes from "./App.less";
+import * as postsActions from "./modules/posts/posts.actions";
 
 class App extends Component {
 	static propTypes = {
-		nameGetValue: string
+		nameGetValue: string,
+		fetchPosts: func
+	}
+
+	componentDidMount() {
+		this.props.fetchPosts();
 	}
 
 	render() {
@@ -22,6 +32,8 @@ class App extends Component {
 		return (
 			<>
 				<h1>Your name is {nameGetValue}</h1>
+				<Link to={`/about`} >about</Link>
+				<ToastContainer />
 				<Switch>
 					<Route exact path={"/"} component={HomePage} />
 					<Route exact path={"/about"} component={About} />
@@ -38,4 +50,4 @@ function mapStateToProps({ app }) {
 	};
 }
 
-export default withRouter(connect(mapStateToProps, null)(App));
+export default withRouter(connect(mapStateToProps, { ...postsActions })(App));

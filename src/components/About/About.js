@@ -16,7 +16,7 @@ class About extends Component {
 	}
 
 	onInputChange = (event) => {
-		this.props.changeName(event.target.value);
+		this.props.changeName({changeName: event.target.value});
 	}
 
 	onClickIncrementButton = () => {

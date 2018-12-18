@@ -2,30 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import classes from "../HomePage/HomePage.less";
+import {connect} from "react-redux";
 
 
 class HomePageWithId extends Component {
-	state = {
-		posts: []
-	}
-
-	async componentDidMount() {
-		try {
-			let result = await fetch('https://jsonplaceholder.typicode.com/posts/');
-			result = await result.json();
-
-			this.setState({
-				posts: result
-			})
-
-		} catch (e) {
-			console.log(e);
-		}
-
-	}
-
 	renderItem = () => {
-		const { posts } = this.state;
+		const { posts } = this.props;
 
 		const index = this.props.match.params.id - 1;
 
@@ -46,7 +28,7 @@ class HomePageWithId extends Component {
 	}
 
 	render() {
-		const { posts } = this.state;
+		const { posts } = this.props;
 
 		return (
 
@@ -60,5 +42,9 @@ class HomePageWithId extends Component {
 		);
 	}
 }
-
-export default HomePageWithId;
+function mapStateToProps({ posts }) {
+	return {
+		posts: posts.posts,
+	};
+}
+export default connect(mapStateToProps)(HomePageWithId);

@@ -10,7 +10,7 @@ const initialState = {
 const reducer = {
 	[appActions.changeName]: (state, nameValue) => ({
 		...state,
-		name: nameValue
+		name: nameValue.changeName
 	}),
 };
 

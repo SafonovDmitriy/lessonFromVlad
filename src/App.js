@@ -1,53 +1,110 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import HomePage from "./components/HomePage/HomePage";
-import HomePageWithId from "./components/HomePageWithId/HomePageWithId";
-import About from "./components/About/About";
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
-import { string, func } from "prop-types";
+import { string, func, bool, number } from "prop-types";
 
 import { Route, Switch, withRouter, Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-
-import 'react-toastify/dist/ReactToastify.css';
+import * as appActions from "./modules/app/app.actions";
+import "react-toastify/dist/ReactToastify.css";
 
 import classes from "./App.less";
-import * as postsActions from "./modules/posts/posts.actions";
 
 class App extends Component {
-	static propTypes = {
-		nameGetValue: string,
-		fetchPosts: func
-	}
+  static propTypes = {
+    successBox: bool,
+    changebox: func,
+    corPage: func,
+    addname: func,
+    page: number,
+    name: string,
+    surname: string
+  };
 
-	componentDidMount() {
-		this.props.fetchPosts("Привет");
-	}
+  componentDidMount() {}
+  success = () => {
+    this.props.changebox();
+  };
+  addNumberPage = () => {
+    this.props.corPage(1);
+  };
+  delNumberPage = () => {
+    this.props.corPage(-1);
+  };
+  corname = (event) => {
+    this.props.addname(event.target.value);
+  };
+  corsurname = (event) => {
+    this.props.addsurname(event.target.value);
+  };
+  render() {
+    const prop = this.props;
 
-	render() {
-		const { nameGetValue } = this.props;
-
-		return (
-			<>
-				<h1>Your name is {nameGetValue}</h1>
-				<Link to={`/about`} >about</Link>
-				<ToastContainer />
-				<Switch>
-					<Route exact path={"/"} component={HomePage} />
-					<Route exact path={"/about"} component={About} />
-					<Route path={"/homepage/:id"} component={HomePageWithId} />
-				</Switch>
-			</>
-		);
-	}
+    return (
+      <div className={classes.app}>
+        {prop.page === 1 ? (
+          <div>
+            <input
+              type="checkbox"
+              onChange={this.success}
+              checked={prop.success}
+            />
+            <h1>{prop.success ? "Согласен" : "Не согласен"}</h1>
+          </div>
+        ) : prop.page === 2 ? (
+          <>
+            <input type="text" onChange={this.corname} value={prop.name} />
+            <input
+              type="text"
+              onChange={this.corsurname}
+              value={prop.surname}
+            />
+          </>
+        ) : (
+          <h2>Enjoy</h2>
+        )}
+        <div className={classes.forButton}>
+          <div>
+            <button onClick={this.delNumberPage} disabled={prop.page === 1}>
+              Назад
+            </button>
+            <button
+              onClick={this.addNumberPage}
+              disabled={
+                (prop.page === 2 &&
+                  (prop.name === "" ||
+                    prop.surname === "" ||
+                    prop.success === false)) ||
+                prop.page === 3
+              }
+            >
+              Вперед
+            </button>
+          </div>
+          <div>
+            <h1>Страница {prop.page}</h1>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps({ app }) {
-	return {
-		nameGetValue: app.name,
-	};
+  return {
+    success: app.lic,
+    page: app.page,
+    name: app.name,
+    surname: app.surname
+  };
 }
 
-export default withRouter(connect(mapStateToProps, { ...postsActions })(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { ...appActions }
+  )(App)
+);

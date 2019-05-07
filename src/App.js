@@ -74,11 +74,12 @@ class App extends Component {
             <button
               onClick={this.addNumberPage}
               disabled={
-                (prop.page === 2 &&
-                  (prop.name === "" ||
-                    prop.surname === "" ||
-                    prop.success === false)) ||
-                prop.page === 3
+                (
+                  prop.page === 2 &&
+                    (prop.name === "" ||
+                      prop.surname === "" ||
+                      prop.success === false)
+                ) || prop.page === 3
               }
             >
               Вперед
